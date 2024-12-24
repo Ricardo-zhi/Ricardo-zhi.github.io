@@ -3,612 +3,464 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RICARDO TO GUOJI</title>
-    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
-    <!-- 引入字体图标 -->
-    <link rel="stylesheet" href="./font/iconfont.css">
-    <!-- 引入字体 -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400&display=swap">
+    <title>login</title>
+    <!-- 导入字体图标 -->
+    <link rel="stylesheet" href="./font_mw3z7ts489g/iconfont.css">
+
     <style>
         * {
-            padding: 0;
             margin: 0;
-            font-family: "Source Sans Pro", sans-serif;
+            padding: 0;
+            box-sizing: border-box;
+            /* 字体无法选中 */
+            user-select: none;
         }
 
-        /* 设置html和body元素为flex布局，水平和垂直居中对齐，高度为100vh，背景图大小为cover，溢出隐藏，背景图过渡动画时间为0.7秒 */
-        html,
         body {
+            width: 100%;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-size: cover;
-            overflow: hidden;
-            transition: background-image .7s ease-in-out;
+            font-size: 12px;
+            background-color: #ecf0f3;
+            color: #a0a5a8;
         }
 
-        /* 设置.shell元素为相对定位，flex布局，水平和垂直居中对齐，宽度和高度为100%，盒模型为border-box，背景颜色为rgba(99, 99, 99, 0.8) */
         .shell {
             position: relative;
+            width: 1000px;
+            min-width: 1000px;
+            min-height: 600px;
+            height: 600px;
+            padding: 25px;
+            background-color: #ecf0f3;
+            box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* 设置响应式 */
+        @media (max-width: 1200px) {
+            .shell {
+                transform: scale(0.7);
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .shell {
+                transform: scale(0.6);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .shell {
+                transform: scale(0.5);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .shell {
+                transform: scale(0.4);
+            }
+        }
+
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-            background: rgba(22, 54, 32, 0.8);
-        }
-
-        /* 设置.button元素为flex布局，两端对齐，宽度为380px，绝对定位，左侧偏移量为50%，水平居中，底部偏移量为-80px */
-        .button {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /*width: 380px;*/
-            width: 600px;
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -80px;
-        }
-
-        /* 设置.prev和.next元素过渡动画时间为0.25秒，层级为99999，底部偏移量为5px */
-        .prev,
-        .next {
-            transition: transform 0.25s ease;
-            z-index: 99999;
-            bottom: 5px;
-        }
-
-        /* 设置.prev和.next元素中的i元素字体大小为90px，颜色为#fff，光标为指针，文字阴影为0 0 10px #ffffff */
-        .prev i,
-        .next i {
-            font-size: 60px;
-            color: #08a5d4;
-            cursor: pointer;
-            text-shadow: 0 0 10px #08a5d4;
-        }
-
-        .custom-font {
-            font-family: 'Arial', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            text-transform: uppercase;
-        }
-
-
-        /* 设置.shell_body元素宽度为100%，缩放为0.8倍，上内边距为20px，下内边距为150px */
-        .shell_body {
-            width: 100%;
-            transform: scale(.8);
-            padding: 20px 0 150px 0;
-        }
-
-        /* 设置.shell_slider元素为相对定位，过渡动画时间为1秒，背景为透明 */
-        .shell_slider {
-            position: relative;
-            transition: transform 1s ease-in-out;
-            background: transparent;
-        }
-
-        /* 设置.item元素为相对定位，左浮动，左右外边距为20px */
-        .item {
-            position: relative;
-            
-            float: left;
-            margin: 0 20px;
-        }
-
-        /* 设置.frame元素为相对定位，宽度和高度为100%，过渡动画时间为1秒，3D变换模式为保留3D效果 */
-        .frame {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            /* background-image: url(./01.jpg); */
-            transition: transform 1s ease-in-out;
-            transform-style: preserve-3d;
-        }
-
-        /* 设置.frame元素的伪元素为绝对定位，底部偏移量为-16%，宽度为100%，高度为60px，背景颜色为#ffffff1c，盒阴影为0px 0px 15px 5px #ffffff1c，3D变换为绕X轴旋转90度并向上平移20px */
-        .frame:after {
-            content: "";
-            position: absolute;
-            bottom: -16%;
-            width: 100%;
-            height: 60px;
-            background: #ffffff1c;
-            box-shadow: 0px 0px 15px 5px #ffffff1c;
-            transform: rotateX(90deg) translate3d(0px, -20px, 0px);
-        }
-
-        /* 设置.box元素为flex布局，纵向排列，水平和垂直居中对齐，绝对定位，宽度和高度为100%，边框为4px实心白色，透视效果为1000px，3D变换模式为保留3D效果 */
-        .box {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid #fff;
-            perspective: 1000px;
-            transform-style: preserve-3d;
-        }
-
-        /* 设置.box元素中的h1和span元素颜色为#fff，Z轴平移距离为20px */
-        .box h1,
-        .box span {
-            color: #fff;
-            transform: translateZ(20px);
-        }
-
-        /* 设置.box元素中的h1元素文字阴影为0 0 30px #1f05b4，字体大小为100px */
-        .box h1 {
-            text-shadow: 0 0 30px #1f05b4;
-            font-size: 100px;
-        }
-
-        /* 设置.box元素中的span元素为绝对定位，底部偏移量为20px，左右内边距为25px，文字阴影为0 0 10px #1f05b4 */
-        .box span {
-            position: absolute;
-            bottom: 20px;
-            padding: 0 25px;
-            text-shadow: 0 0 10px #1f05b4;
-        }
-
-        /* 设置.front、.left和.right元素的盒阴影为0 0 50px #ffffff，背景图大小为cover */
-        .front,
-        .left,
-        .right {
-            box-shadow: 0 0 50px #ffffff;
-            /* background-image: url(./01.jpg); */
-            background-size: cover;
-        }
-
-        /* 设置.left和.right元素的顶部偏移量为0，宽度为60px，背面不可见 */
-        .right,
-        .left {
             top: 0;
-            width: 60px;
-            backface-visibility: hidden;
+            width: 600px;
+            height: 100%;
+            padding: 25px;
+            background-color: #ecf0f3;
+            transition: 1.25s;
         }
 
-        /* 设置.left元素的左侧偏移量为0，左边框宽度为5px，3D变换为向右平移1px，Z轴平移-60px，绕Y轴逆时针旋转90度，变换原点为左侧 */
-        .left {
+        .form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .iconfont {
+            margin: 0 5px;
+            border: rgba(0, 0, 0, 0.5) 2px solid;
+            border-radius: 50%;
+            font-size: 25px;
+            padding: 3px;
+            opacity: 0.5;
+            transition: 0.1s;
+        }
+
+        .iconfont:hover {
+            opacity: 1;
+            transition: 0.15s;
+            cursor: pointer;
+        }
+
+        .form_input {
+            width: 350px;
+            height: 40px;
+            margin: 4px 0;
+            padding-left: 25px;
+            font-size: 13px;
+            letter-spacing: 0.15px;
+            border: none;
+            outline: none;
+            background-color: #ecf0f3;
+            transition: 0.25s ease;
+            border-radius: 8px;
+            box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
+        }
+
+        .form_input:focus {
+            box-shadow: inset 4px 4px 4px #d1d9e6, inset -4px -4px 4px #f9f9f9;
+        }
+
+        .form_span {
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        .form_link {
+            color: #181818;
+            text-decoration: none;  
+            font-size: 15px;
+            margin-top: 25px;
+            border-bottom: 1px solid #a0a5a8;
+            line-height: 2;
+        }
+
+        .title {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 3;
+            color: #181818;
+            letter-spacing: 10px;
+        }
+
+        .description {
+            font-size: 14px;
+            letter-spacing: 0.25px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .button {
+            width: 180px;
+            height: 50px;
+            border-radius: 25px;
+            margin-top: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1.15px;
+            background-color: #4B70E2;
+            color: #f9f9f9;
+            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #f9f9f9;
+            border: none;
+            outline: none;
+        }
+
+        .a-container {
+            z-index: 100;
+            left: calc(100% - 600px);
+        }
+
+        .b-container {
+            left: calc(100% - 600px);
+            z-index: 0;
+        }
+
+        .switch {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
             left: 0;
-            border-left-width: 5px;
-            transform: translate3d(1px, 0, -60px) rotateY(-90deg);
-            transform-origin: 0%;
+            height: 100%;
+            width: 400px;
+            padding: 50px;
+            z-index: 200;
+            transition: 1.25s;
+            background-color: #ecf0f3;
+            overflow: hidden;
+            box-shadow: 4px 4px 10px #d1d9e6, -4px -4px 10px #d1d9e6;
         }
 
-        /* 设置.right元素的右侧偏移量为0，右边框宽度为5px，3D变换为向左平移1px，Z轴平移-60px，绕Y轴顺时针旋转90度，变换原点为右侧 */
-        .right {
-            right: 0;
-            border-right-width: 5px;
-            transform: translate3d(-1px, 0, -60px) rotateY(90deg);
-            transform-origin: 100%;
-        }
-       
-        .photo-container {
-            position: absolute; 
-            /* 设置照片容器为绝对定位 */
-            top: 10px; /* 调整照片容器的位置，使其在整体的上方 */
-            right: 75px; /* 水平居中 */
-            transform: translateX(-50%); /* 水平居中 */
-            width: 100px; /* 设置容器宽度 */
-            height: 100px; /* 设置容器高度，确保宽高相等以呈现圆形 */
-            overflow: hidden; /* 隐藏溢出部分 */
+        .switch_circle {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background-color: #ecf0f3;
+            box-shadow: inset 8px 8px 12px #b8bec7, inset -8px -8px 12px #fff;
+            bottom: -60%;
+            left: -60%;
+            transition: 1.25s;
         }
 
-        .photo-containercake {
-            position: absolute; 
-            /* 设置照片容器为绝对定位 */
-            top:auto; /* 调整照片容器的位置，使其在整体的上方 */
-            right: 190px; /* 水平居中 */
-            transform: translateX(-50%); /* 水平居中 */
-            width: 100px; /* 设置容器宽度 */
-            height: 100px; /* 设置容器高度，确保宽高相等以呈现圆形 */
-            overflow: hidden; /* 隐藏溢出部分 */
+        .switch_circle-t {
+            top: -30%;
+            left: 60%;
+            width: 300px;
+            height: 300px;
         }
 
-        .photo {
-            width: 100%; /* 让照片充满容器 */
-            height: 100%; /* 让照片充满容器 */
-            object-fit: cover; /* 确保照片填充整个容器 */
-            border-radius: 50%; /* 将照片设置为圆形 */
+        .switch_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+            width: 400px;
+            padding: 50px 55px;
+            transition: 1.25s;
         }
 
-        .barthdayh1 {
-            color: #e80a0a;
-            transform: translateZ(20px);
-            text-shadow: 0 0 30px #1f05b4;
-            font-size: 10px;
+        .switch_button {
+            cursor: pointer;
         }
 
+        .switch_button:hover,
+        .submit:hover {
+            box-shadow: 6px 6px 10px #d1d9e6, -6px -6px 10px #f9f9f9;
+            transform: scale(0.985);
+            transition: 0.25s;
+        }
+
+        .switch_button:active,
+        .switch_button:focus {
+            box-shadow: 2px 2px 6px #d1d9e6, -2px -2px 6px #f9f9f9;
+            transform: scale(0.97);
+            transition: 0.25s;
+        }
+
+        .is-txr {
+            left: calc(100% - 400px);
+            transition: 1.25s;
+            transform-origin: left;
+        }
+
+        .is-txl {
+            left: 0;
+            transition: 1.25s;
+            transform-origin: right;
+        }
+
+        .is-z {
+            z-index: 200;
+            transition: 1.25s;
+        }
+
+        .is-hidden {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            transition: 1.25s;
+        }
+
+        .is-gx {
+            animation: is-gx 1.25s;
+        }
+
+        @keyframes is-gx {
+
+            0%,
+            10%,
+            100% {
+                width: 400px;
+            }
+
+            30%,
+            50% {
+                width: 500px;
+            }
+        }
     </style>
-       
 </head>
+
 <body>
     <div class="shell">
-        <div class="shell_body">
-            <div class="button">
-                <div class="prev"><i class="custom-fon">《⬅<strong>国-彬</strong> </i></div>
-                <div class="photo-containercake"> <i class="custom-fon"> <a href="./卡片/cardindex.html" ><img src="./img/22.jpg" class="photo" alt=""></a></i></div>
-                <div class="next"><i class="custom-fon"> <strong>国际</strong>→》</i></div>
+        <div class="container a-container" id="a-container">
+            <form action="" method="" class="form" id="a-form">
+                <h2 class="form_title title">创建账号</h2>
+                <div class="form_icons">
+                    
+
+                </div>
+                <span class="form_span">输入用户名和密码</span>
+                <input type="text" class="form_input" placeholder="用户名(已有账号:名字首字母大写)" id="register-name">  
+                <input type="password" class="form_input" placeholder="密码（出生日期）" id="register-password">
+                <button class="form_button button submit">SIGN UP</button>
+            </form>
+        </div>
+
+        <div class="container b-container" id="b-container">
+            <form action="" method="" class="form" id="b-form">
                 
-                
+                <h2 class="form_title title">登陆</h2>
+                <div class="form_icons">
+
+                </div>
+                <span class="form_span">输入用户名和密码</span>
+                <input type="text" class="form_input" placeholder="用户名" id="login-name">  
+                <input type="password" class="form_input" placeholder="密码" id="login-password"> 
+                <a class="form_link" href="#" onclick="showForgotPasswordMessage(event)">忘记密码？</a>  
+                <button class="form_button button submit">SIGN IN</button>
+            </form>
+        </div>
+
+        <div class="switch" id="switch-cnt">
+            <div class="switch_circle"></div>
+            <div class="switch_circle switch_circle-t"></div>
+            <div class="switch_container" id="switch-c1">
+                <h2 class="switch_title title" style="letter-spacing: 0;">Welcome Back！</h2>
+                <p class="switch_description description">已有账户，去登录</p>
+                <button class="switch_button button switch-btn">SIGN IN</button>
             </div>
 
-            
-            <div class="shell_slider">
-                <div class="item">
-                    <div class="frame">
-                        
-                        <div class="box front">
-                            
-                            <h1>2005</h1>
-                           
-                            <span>-In the year 2005 I reached the age of 0-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2006</h1>
-                           
-                            <span>-In the year 2006 I reached the age of 01-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2007</h1>
-                           
-                            <span>-In the year 2007 I reached the age of 02-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2008</h1>
-                           
-                            <span>-In the year 2008 I reached the age of 03-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2009</h1>
-                           
-                            <span>-In the year 2009 I reached the age of 04-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2010</h1>
-                           
-                            <span>-In the year 2010 I reached the age of 05-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2011</h1>
-                           
-                            <span>-In the year 2011 I reached the age of 06-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2012</h1>
-                           
-                            <span>-In the year 2012 I reached the age of 07-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        
-                        <div class="box front">
-                            
-                            <h1>2013</h1>
-                           
-                            <span>-In the year 2013 I reached the age of 08-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front ">
-                            
-                            <h1>2014</h1>
-                           
-                            <span>-In the year 2014 I reached the age of 09-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2015</h1>
-                            <span>-In the year 2015 I reached the age of 10-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2016</h1>
-                            <span>-In the year 2016 I reached the age of 11-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"></div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            
-                            <h1>2017</h1>
-                            <span>-In the year 2017 I reached the age of 12-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2018</h1>
-                            <span>-In the year 2018 I reached the age of 13-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2019</h1>
-                            <span>-In the year 2019 I reached the age of 14-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2020</h1>
-                            <span>-In the year 2020 I reached the age of 15-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2021</h1>
-                            <span>-In the year 2021 I reached the age of 16-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2022</h1>
-                            <span>-In the year 2022 I reached the age of 17-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <div class="photo-container"><img src="./img/12.jpg " class="photo" alt=""></div>
-                            <h1>2023</h1>
-                            <span>-In the year 2023 I reached the age of 18-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1>2024</h1>
-                            <span>-In the year 2024 I reached the age of 19-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1 class="barthdayh1">HAPPY</h1>
-                            <span>-In the year 2024 I reached the age of 19-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="frame">
-                        <div class="box front">
-                            <h1 class="barthdayh1">BIRTHDAY</h1>
-                            <span>-In the year 2024 I reached the age of 19-</span>
-                        </div>
-                        <div class="box left"></div>
-                        <div class="box right"> </div>
-                    </div>
-                </div>
-                
+            <div class="switch_container is-hidden" id="switch-c2">
+                <h2 class="switch_title title" style="letter-spacing: 0;">Hello Friend！</h2>
+                <p class="switch_description description">没有账户？去注册</p>
+
+                <button class="switch_button button switch-btn">SIGN UP</button>
             </div>
         </div>
     </div>
-    
 </body>
-<script>
-    // 这段JavaScript代码的作用是实现一个图片轮播效果。首先，通过document.getElementsByClassName('item')获取到所有具有item类名的元素，并将它们存储在items变量中。
-    // 然后，通过一个循环遍历每个item元素。在循环中，首先获取当前的item元素，然后通过getElementsByClassName方法获取到该item下的frame、front、left和right元素，并将它们分别存储在frame、frontBox、leftBox和rightBox变量中。
-    // 接下来，通过设置frontBox、leftBox和rightBox的style.backgroundImage属性，将背景图片设置为'url(./img/' + (i + 1).toString().padStart(2, '0') + '.jpg)'，其中(i + 1).toString().padStart(2, '0')表示将循环变量i加1后转换为字符串，并在前面补0，以保证图片的文件名格式正确。
-    // 接着，定义了一个立即执行函数，并在函数内部进行了一些操作。首先，通过document.getElementsByClassName('shell')[0]获取到具有shell类名的元素，并将其存储在shell变量中。然后，通过shell.getElementsByClassName方法获取到该shell元素下的shell_slider、item、prev和next元素，并将它们分别存储在slider、items、prevBtn和nextBtn变量中。
-    // 接下来，定义了一些变量，包括width、height、totalWidth、margin、currIndex、interval和intervalTime。width和height分别表示每个item的宽度和高度，totalWidth表示所有item的总宽度，margin表示item的外边距，currIndex表示当前显示的item的索引，interval表示定时器的ID，intervalTime表示定时器的时间间隔。
-    // 然后，定义了init函数，该函数用于初始化一些操作。在该函数中，首先调用resize函数调整大小，然后调用move函数将显示的item移动到中间位置，接着调用bindEvents函数绑定事件，最后调用timer函数启动定时器。
-    // 接着，定义了resize函数，该函数用于在窗口大小变化时调整大小。在该函数中，首先计算出新的width和height，然后根据计算结果设置slider的宽度，以及每个item的宽度和高度。
-    // 接下来，定义了bindEvents函数，该函数用于绑定事件。在该函数中，首先绑定了窗口大小变化时调用resize函数的事件，然后绑定了点击prev按钮和next按钮时调用prev函数和next函数的事件。
-    // 最后，在立即执行函数的末尾，调用了init函数来初始化页面，并定义了move、timer、prev和next函数。其中，move函数用于移动shell到指定的item，timer函数用于启动定时器，prev函数用于切换到上一个item，next函数用于切换到下一个item。
+<script>  
+    let switchCtn = document.querySelector("#switch-cnt");  
+    let switchC1 = document.querySelector("#switch-c1");  
+    let switchC2 = document.querySelector("#switch-c2");  
+    let switchCircle = document.querySelectorAll(".switch_circle");  
+    let switchBtn = document.querySelectorAll(".switch-btn");  
+    let aContainer = document.querySelector("#a-container");  
+    let bContainer = document.querySelector("#b-container");  
+    let allButtons = document.querySelectorAll(".submit");  
 
-    // 获取所有的item元素
-    var items = document.getElementsByClassName('item');
-    // 循环遍历每个item
-    for (var i = 0; i < items.length; i++) {
-        // 获取当前item
-        var item = items[i];
-        var frame = item.getElementsByClassName('frame')[0];
-        var frontBox = frame.getElementsByClassName('front')[0];
-        var leftBox = frame.getElementsByClassName('left')[0];
-        var rightBox = frame.getElementsByClassName('right')[0];
-        // 设置背景图片
-        frontBox.style.backgroundImage = 'url(./img/' + (i + 1).toString().padStart(2, '0') + '.jpg)';
-        leftBox.style.backgroundImage = 'url(./img/' + (i + 1).toString().padStart(2, '0') + '.jpg)';
-        rightBox.style.backgroundImage = 'url(./img/' + (i + 1).toString().padStart(2, '0') + '.jpg)';
+    function showForgotPasswordMessage(event) {  
+            // 阻止链接的默认行为（即跳转到href指定的URL）  
+            event.preventDefault();  
+              
+            // 使用alert函数弹出提示信息  
+            alert("重新注册吧");  
+        }  
 
-        // frontBox.style.backgroundImage = 'url(./' + (i + 1).toString().padStart(2, '0') + '.jpg)';
-        // leftBox.style.backgroundImage = 'url(./' + (i + 1).toString().padStart(2, '0') + '.jpg)';
-        // rightBox.style.backgroundImage = 'url(./' + (i + 1).toString().padStart(2, '0') + '.jpg)';
+    document.getElementById('a-form').addEventListener('submit', function(e) {    
+    e.preventDefault();    
+    let name = document.getElementById('register-name').value;    
+    // let email = document.getElementById('register-email').value; // 如果不需要邮箱，可以删除这行代码  
+    let password = document.getElementById('register-password').value;    
+    if (name && password) {    
+        // 注意：这里使用了用户名作为键，但在实际应用中，您应该使用更安全的方法（如邮箱或用户ID）  
+        localStorage.setItem('user-' + name, password); // 存储用户名（作为键）和密码（作为值）    
+        alert('注册成功！');    
+        // 可以选择重置表单、隐藏注册表单并显示登录表单等  
+        // document.getElementById('a-form').reset();    
+        // changeForm(); // 如果需要自动切换表单，可以取消注释这行代码  
+    } else {    
+        alert('请填写所有字段！');    
+    }    
+});   
+
+document.getElementById('b-form').addEventListener('submit', function(e) {    
+    e.preventDefault();    
+    let name = document.getElementById('login-name').value;    
+    let password = document.getElementById('login-password').value;    
+    // let storedPassword = localStorage.getItem('user-' + name); 
+    
+    
+    // if (storedPassword && storedPassword === password) {    
+    //     // alert('登录成功！');    
+    //     // 可以选择执行某些操作，如重定向到另一个页面等  
+    //     window.location.href = './卡片/indextime.html';    
+    // } else {    
+    //     alert('用户名或密码错误！');    
+    // }    
+
+
+    if (name === 'DGB' && password === '20050423') {    
+        // alert('登录成功！');    
+        // 可以选择执行某些操作，如重定向到另一个页面等  
+        window.location.href = './卡片/indextime.html';    
+    } else {    
+        alert('用户名或密码错误！（国际专用！！！）');    
     }
-    (function () {
-        "use strict";
-        var shell = document.getElementsByClassName('shell')[0];
-        var slider = shell.getElementsByClassName('shell_slider')[0];
-        var items = shell.getElementsByClassName('item');
-        var prevBtn = shell.getElementsByClassName('prev')[0];
-        var nextBtn = shell.getElementsByClassName('next')[0];
-        // 定义变量
-        var width, height, totalWidth, margin = 20,
-            currIndex = 0,
-            interval, intervalTime = 3000;
-        function init() {
-            // 初始化函数
-            resize();
-            move(Math.floor(items.length / 2));
-            bindEvents();
-            timer();
-        }
-        function resize() {
-            // 窗口大小变化时调整大小
-            width = Math.max(window.innerWidth * .20, 275);
-            height = window.innerHeight * .5;
-            totalWidth = width * items.length;
-            // 设置slider宽度
-            slider.style.width = totalWidth + "px";
-            // 设置每个item的宽度和高度
-            for (var i = 0; i < items.length; i++) {
-                let item = items[i];
-                item.style.width = (width - (margin * 2)) + "px";
-                item.style.height = height + "px";
-            }
-        }
-        function bindEvents() {
-            // 窗口大小变化时调整大小
-            window.onresize = resize;
-            // 点击prev按钮切换item
-            prevBtn.addEventListener('click', () => { prev(); });
-            nextBtn.addEventListener('click', () => { next(); });
-        }
-        init();
-        function move(index) {
-            // 移动shell到指定的item
-            if (index < 1) index = items.length;
-            if (index > items.length) index = 1;
-            currIndex = index;
-            // 遍历所有item
-            for (var i = 0; i < items.length; i++) {
-                let item = items[i],
-                    box = item.getElementsByClassName('frame')[0];
-                if (i == (index - 1)) {
-                    // 当前item添加active类并设置3D效果
-                    item.classList.add('item--active');
-                    box.style.transform = "perspective(1200px)";
-                } else {
-                    // 其他item移除active类并设置3D效果
-                    item.classList.remove('item--active');
-                    box.style.transform = "perspective(1200px) rotateY(" + (i < (index - 1) ? 40 : -40) + "deg)";
-                }
-            }
-            // 移动slider
-            slider.style.transform = "translate3d(" + ((index * -width) + (width / 2) + window.innerWidth / 2) + "px, 0, 0)";
-            // 设置body背景图片
-            var frontBox = items[index - 1].getElementsByClassName('front')[0];
-            document.body.style.backgroundImage = frontBox.style.backgroundImage;
-        }
-        function timer() {
-            // 定时器，自动切换shell
-            clearInterval(interval);
-            interval = setInterval(() => {
-                move(++currIndex);
-            }, intervalTime);
-        }
-        // 切换item
-        function prev() {
-            move(--currIndex);
-            timer();
-        }
-        function next() {
-            move(++currIndex);
-            timer();
-        }
 
- 
+}); 
 
-    })();
-</script>
+    let changeForm = (e) => {  
+        e.preventDefault();  
+        switchCtn.classList.add("is-gx");  
+        setTimeout(function () {  
+            switchCtn.classList.remove("is-gx");  
+        }, 1500);  
+        switchCtn.classList.toggle("is-txr");  
+        switchCircle[0].classList.toggle("is-txr");  
+        switchCircle[1].classList.toggle("is-txr");  
 
-</html>
+        switchC1.classList.toggle("is-hidden");  
+        switchC2.classList.toggle("is-hidden");  
+        aContainer.classList.toggle("is-txl");  
+        bContainer.classList.toggle("is-txl");  
+        bContainer.classList.toggle("is-z");  
+    }  
+
+    let shell = (e) => {  
+        for (var i = 0; i < switchBtn.length; i++) {  
+            switchBtn[i].addEventListener("click", changeForm);  
+        }  
+    }  
+    window.addEventListener("load", shell);  
+</script> 
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+
+<!-- <script>
+    let switchCtn = document.querySelector("#switch-cnt");
+    let switchC1 = document.querySelector("#switch-c1");
+    let switchC2 = document.querySelector("#switch-c2");
+    let switchCircle = document.querySelectorAll(".switch_circle");
+    let switchBtn = document.querySelectorAll(".switch-btn");
+    let aContainer = document.querySelector("#a-container");
+    let bContainer = document.querySelector("#b-container");
+    let allButtons = document.querySelectorAll(".submit");
+
+    let getButtons = (e) => e.preventDefault()
+    let changeForm = (e) => {
+    
+        switchCtn.classList.add("is-gx");
+        setTimeout(function () {
+            switchCtn.classList.remove("is-gx");
+        }, 1500)
+        switchCtn.classList.toggle("is-txr");
+        switchCircle[0].classList.toggle("is-txr");
+        switchCircle[1].classList.toggle("is-txr");
+
+        switchC1.classList.toggle("is-hidden");
+        switchC2.classList.toggle("is-hidden");
+        aContainer.classList.toggle("is-txl");
+        bContainer.classList.toggle("is-txl");
+        bContainer.classList.toggle("is-z");
+    }
+
+    let shell = (e) => {
+        for (var i = 0; i < allButtons.length; i++)
+            allButtons[i].addEventListener("click", getButtons);
+        for (var i = 0; i < switchBtn.length; i++)
+            switchBtn[i].addEventListener("click", changeForm)
+    }
+    window.addEventListener("load", shell);
+
+</script> -->
+</html> 
